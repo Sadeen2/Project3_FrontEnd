@@ -1,87 +1,115 @@
-fetch('./data/aboutMeData.json')
-  .then(response => response.json())
-  .then(data => {
+// Load About Me Data
+async function loadAboutMe() {
+  try {
+    const response = await fetch('./data/aboutMeData.json');
+    const data = await response.json();
+
     const aboutMeContainer = document.getElementById('aboutMe');
+    const fragment = document.createDocumentFragment();
 
     // Bio
     const bioParagraph = document.createElement('p');
-    bioParagraph.textContent = data.aboutMe;
-    aboutMeContainer.appendChild(bioParagraph);
-    aboutMeContainer.classList.add('fade-in');
+    bioParagraph.textContent = data.aboutMe || "No biography available";
+    fragment.appendChild(bioParagraph);
 
     // Headshot
     const headshotDiv = document.createElement('div');
     headshotDiv.classList.add('headshotContainer');
 
     const img = document.createElement('img');
-    img.src = data.headshot;
+    img.src = data.headshot || './images/default-headshot.jpg';  // fallback image
     img.alt = 'Headshot';
-
     headshotDiv.appendChild(img);
-    aboutMeContainer.appendChild(headshotDiv);
-  })
-  .catch(error => console.error('Error loading About Me data:', error));
+
+    fragment.appendChild(headshotDiv);
+    aboutMeContainer.appendChild(fragment);
+    aboutMeContainer.classList.add('fade-in');
+  } catch (error) {
+    console.error('Error loading About Me data:', error);
+  }
+}
 
 // Load Projects Data
-fetch('./data/projectsData.json')
-  .then(response => response.json())
-  .then(data => {
+async function loadProjects() {
+  try {
+    const response = await fetch('./data/projectsData.json');
+    const data = await response.json();
+
     const projectList = document.getElementById('projectList');
     const projectSpotlight = document.getElementById('projectSpotlight');
     const spotlightTitles = document.getElementById('spotlightTitles');
+    const fragment = document.createDocumentFragment();
 
     data.forEach((project, index) => {
-      // Create project card
       const card = document.createElement('div');
       card.className = 'projectCard';
       card.id = project.project_id;
-      card.style.backgroundImage = `url(${project.card_image})`;
+      card.style.backgroundImage = `url(${project.card_image || './images/default-card.jpg'})`;
       card.style.backgroundSize = 'cover';
       card.style.backgroundPosition = 'center';
 
       const name = document.createElement('h3');
-      name.textContent = project.project_name;
+      name.textContent = project.project_name || 'Untitled Project';
 
       const shortDesc = document.createElement('p');
-      shortDesc.textContent = project.short_description;
+      shortDesc.textContent = project.short_description || 'No description available.';
 
       card.appendChild(name);
       card.appendChild(shortDesc);
-      projectList.appendChild(card);
+      fragment.appendChild(card);
 
-      // Set default spotlight (first project)
+      // Default spotlight
       if (index === 0) {
-        projectSpotlight.style.backgroundImage = `url(${project.spotlight_image || project.card_image})`;
-        spotlightTitles.innerHTML = `
-          <h3>${project.project_name}</h3>
-          <p>${project.long_description || project.short_description}</p>
-          <a href="${project.url}" target="_blank">View Project</a>
-        `;
+        updateSpotlight(project);
       }
 
-      // Add event listener for spotlight update
-      card.addEventListener('click', () => {
-        projectSpotlight.style.backgroundImage = `url(${project.spotlight_image || project.card_image})`;
-        spotlightTitles.innerHTML = `
-          <h3>${project.project_name}</h3>
-          <p>${project.long_description || project.short_description}</p>
-          <a href="${project.url}" target="_blank">View Project</a>
-        `;
-      });
+      // Click to update spotlight
+      card.addEventListener('click', () => updateSpotlight(project));
     });
-  })
-  .catch(error => {
-    console.error('Error loading project data:', error);
-  });
 
-  document.addEventListener('DOMContentLoaded', () => {
+    projectList.appendChild(fragment);
+  } catch (error) {
+    console.error('Error loading project data:', error);
+  }
+}
+
+// Spotlight update function using DOM methods (no innerHTML)
+function updateSpotlight(project) {
+  const projectSpotlight = document.getElementById('projectSpotlight');
+  const spotlightTitles = document.getElementById('spotlightTitles');
+
+  projectSpotlight.style.backgroundImage = `url(${project.spotlight_image || project.card_image || './images/default-card.jpg'})`;
+
+  // Clear and rebuild content
+  while (spotlightTitles.firstChild) {
+    spotlightTitles.removeChild(spotlightTitles.firstChild);
+  }
+
+  const title = document.createElement('h3');
+  title.textContent = project.project_name || 'Untitled Project';
+
+  const description = document.createElement('p');
+  description.textContent = project.long_description || project.short_description || 'No details available.';
+
+  const link = document.createElement('a');
+  link.href = project.url || '#';
+  link.textContent = 'View Project';
+  link.target = '_blank';
+
+  spotlightTitles.appendChild(title);
+  spotlightTitles.appendChild(description);
+  spotlightTitles.appendChild(link);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  loadAboutMe();
+  loadProjects().then(() => {
     const projectList = document.getElementById('projectList');
     const leftArrow = document.querySelector('.arrow-left');
     const rightArrow = document.querySelector('.arrow-right');
-  
-    // Detect screen width for mobile vs desktop behavior
+
     const isMobile = window.innerWidth < 768;
-  
+
     leftArrow.addEventListener('click', () => {
       if (isMobile) {
         projectList.scrollBy({ left: -200, behavior: 'smooth' });
@@ -89,7 +117,7 @@ fetch('./data/projectsData.json')
         projectList.scrollBy({ top: -200, behavior: 'smooth' });
       }
     });
-  
+
     rightArrow.addEventListener('click', () => {
       if (isMobile) {
         projectList.scrollBy({ left: 200, behavior: 'smooth' });
@@ -98,67 +126,4 @@ fetch('./data/projectsData.json')
       }
     });
   });
-
-  document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('formSection');
-    const emailInput = document.getElementById('contactEmail');
-    const messageInput = document.getElementById('contactMessage');
-    const emailError = document.getElementById('emailError');
-    const messageError = document.getElementById('messageError');
-    const charactersLeft = document.getElementById('charactersLeft');
-  
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const invalidCharRegex = /[^a-zA-Z0-9@._-]/;
-  
-    // Update character count while typing
-    messageInput.addEventListener('input', () => {
-      const length = messageInput.value.length;
-      charactersLeft.textContent = `Characters: ${length}/300`;
-  
-      if (length > 300) {
-        messageError.textContent = 'Message must not exceed 300 characters.';
-      } else {
-        messageError.textContent = '';
-      }
-    });
-  
-    // Form submission
-    form.addEventListener('submit', (e) => {
-      e.preventDefault(); // prevent page reload
-  
-      let isValid = true;
-      emailError.textContent = '';
-      messageError.textContent = '';
-  
-      const email = emailInput.value.trim();
-      const message = messageInput.value.trim();
-  
-      // Validate email format
-      if (!emailRegex.test(email)) {
-        emailError.textContent = 'Please enter a valid email address.';
-        isValid = false;
-      }
-  
-      // Check for invalid characters
-      if (invalidCharRegex.test(email)) {
-        emailError.textContent += ' Email contains invalid characters.';
-        isValid = false;
-      }
-  
-      if (message.length === 0) {
-        messageError.textContent = 'Message cannot be empty.';
-        isValid = false;
-      } else if (message.length > 300) {
-        messageError.textContent = 'Message must be less than 300 characters.';
-        isValid = false;
-      }
-  
-      if (isValid) {
-        alert('Form submitted successfully!');
-        form.reset();
-        charactersLeft.textContent = 'Characters: 0/300';
-      }
-    });
-  });
-  
-  
+});

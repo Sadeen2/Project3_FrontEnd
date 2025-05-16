@@ -4,8 +4,8 @@
     "project_name": "To-Do List App",
     "short_description": "Organize your tasks efficiently.",
     "long_description": "Create a web or mobile app to help users manage their tasks, set deadlines, and prioritize their workload. This project is a good introduction to frontend development and basic backend logic.",
-    "card_image": "../images/todo.png",
-    "spotlight_image": "../images/todospot.png",
+    "card_image": "images/todo.png",
+    "spotlight_image": "images/todospot.png",
     "url": "https://example.com/project2"
   },
   {
@@ -13,8 +13,8 @@
     "project_name": "Simple Calculator",
     "short_description": "Build a basic calculator.",
     "long_description": "Develop a web-based or mobile calculator that can perform basic arithmetic operations. This project is a good starting point for learning fundamental programming concepts and user interface design.",
-    "card_image": "../images/cal.png",
-    "spotlight_image": "../images/calc.jpeg",
+    "card_image": "images/cal.png",
+    "spotlight_image": "images/calc.jpeg",
     "url": "https://example.com/project3"
   },
   {
@@ -22,8 +22,8 @@
     "project_name": "E-commerce Store",
 
     "long_description": "Build a simple e-commerce website or app to sell products. This project involves frontend development, backend logic, and potentially database integration.",
-    "card_image": "../images/ecomm_spotlight.png",
-    "spotlight_image": "../images/e_com.png",
+    "card_image": "images/ecomm_spotlight.png",
+    "spotlight_image": "images/e_com.png",
     "url": "https://example.com/project4"
   },
   {
@@ -31,8 +31,8 @@
     "project_name": "Weather App",
     "short_description": "Get real-time weather updates.",
 
-    "card_image": "../images/weather_spotlight.jpg",
-    "spotlight_image": "../images/weather.jpg",
+    "card_image": "images/weather_spotlight.jpg",
+    "spotlight_image": "images/weather.jpg",
     "url": "https://example.com/project5"
   },
   {
@@ -40,8 +40,8 @@
     "project_name": "Game Development",
     "short_description": "Create your own games.",
     "long_description": "Explore game development by creating simple games using frameworks like Unity or Godot. This is a fun and challenging way to learn about game design, programming, and art.",
-    "card_image": "../images/game_spotlight.png",
-    "spotlight_image": "../images/game.jpg",
+    "card_image": "images/game_spotlight.png",
+    "spotlight_image": "images/game.jpg",
     "url": "https://example.com/project7"
   },
   {
@@ -49,8 +49,8 @@
     "project_name": "Social Media App",
     "short_description": "Connect with friends and family.",
     "long_description": "Build a social media platform where users can create profiles, share content, and interact with others. This project can involve frontend development, backend logic, and database management.",
-    "card_image": "../images/chat_spotligt.png",
-    "spotlight_image": "../images/p1.png",
+    "card_image": "images/chat_spotligt.png",
+    "spotlight_image": "images/p1.png",
     "url": "https://example.com/project8"
   },
   {
@@ -58,8 +58,8 @@
     "project_name": "Music Player",
     "short_description": "Create a music streaming app.",
     "long_description": "Develop a music player or streaming app that allows users to listen to music, create playlists, and discover new artists. This project can involve working with APIs and media playback technologies.",
-    "card_image": "../images/music_spotligt.png",
-    "spotlight_image": "../images/music.jpg",
+    "card_image": "images/music_spotligt.png",
+    "spotlight_image": "images/music.jpg",
     "url": "https://example.com/project9"
   },
   {
@@ -67,8 +67,8 @@
     "project_name": "Fitness Tracker",
     "short_description": "Track your workouts and progress.",
     "long_description": "Build a fitness tracking app to help users monitor their workouts, set goals, and track their progress. This project can involve data collection, analysis, and visualization.",
-    "card_image": "../images/fitness_spotlight.jpg",
-    "spotlight_image": "../images/fit.jpg",
+    "card_image": "images/fitness_spotlight.jpg",
+    "spotlight_image": "images/fit.jpg",
     "url": "https://example.com/project10"
   }
 ]
